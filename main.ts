@@ -403,7 +403,7 @@ const createPiece = (color: Color): HTMLElement => {
   piece.setAttribute("class", "piece");
   piece.setAttribute("color", color);
   let img = document.createElement("img");
-  img.setAttribute("src", `./images/${color}-disc.png`);
+  img.setAttribute("src", `${color}-disc.png`);
   piece.appendChild(img);
   return piece;
 };
