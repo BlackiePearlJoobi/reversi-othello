@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Play Reversi online! A strategic board game where black and white discs battle for dominance. Flip your opponent's pieces, plan your moves, and conquer the board. Start a match now!"
+    />
+
+    <link href="style.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <title>Reversi</title>
+  </head>
+  <body>
+    <div class="container">
+      <div id="blackScore">Black Score: 2</div>
+      <div id="reversiBoard">
+        <!-- 8th rank -->
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <!-- 7th rank -->
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <!-- 6th rank -->
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <!-- 5th rank -->
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square">
+          <div class="piece" color="white">
+            <img src="./images/white-disc.png" />
+          </div>
+        </div>
+        <div class="square">
+          <div class="piece" color="black">
+            <img src="./images/black-disc.png" />
+          </div>
+        </div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <!-- 4th rank -->
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square">
+          <div class="piece" color="black">
+            <img src="./images/black-disc.png" />
+          </div>
+        </div>
+        <div class="square">
+          <div class="piece" color="white">
+            <img src="./images/white-disc.png" />
+          </div>
+        </div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <!-- 3rd rank -->
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <!-- 2nd rank -->
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <!-- 1st rank -->
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+      </div>
+      <div id="whiteScore">White Score: 2</div>
+      <button id="resetButton">Reset</button>
+    </div>
+    <div id="alert"></div>
+    <script src="main.js"></script>
+  </body>
+</html>
