@@ -5,7 +5,7 @@ const blackScore = document.getElementById("blackScore");
 const reversiBoad = document.getElementById("reversiBoard");
 let squares = document.getElementsByClassName("square");
 let squaresToFlip = [];
-let isWhiteTurn = true;
+let isWhiteTurn = false;
 let whiteCount = 2;
 let blackCount = 2;
 let noLegalMove = false;
@@ -19,7 +19,7 @@ const setupBoard = () => {
         squares[i].addEventListener("click", onSquareClick);
     }
     // identify legal squares
-    let legalSquares = getLegalSquares("white");
+    let legalSquares = getLegalSquares("black");
     highlightLegalSquares(legalSquares);
     whiteScore === null || whiteScore === void 0 ? void 0 : whiteScore.classList.add("active");
 };
@@ -311,6 +311,10 @@ const onSquareClick = (e) => {
     checkAndFlip(clickedSquare.id, pieceColor);
     switchTurn();
     checkEndGame();
+    // if it's the CPU's turn, trigger `cpuMove`
+    if (isWhiteTurn) {
+        setTimeout(cpuMove, 500);
+    }
 };
 // create a piece of a specified color
 const createPiece = (color) => {
@@ -425,13 +429,79 @@ const resetGame = () => {
     whiteScore.innerHTML = `White Score: ${whiteCount}`;
     blackScore.innerHTML = `Black Score: ${blackCount}`;
     // Reset turn
-    isWhiteTurn = true;
-    whiteScore === null || whiteScore === void 0 ? void 0 : whiteScore.classList.add("active");
-    blackScore === null || blackScore === void 0 ? void 0 : blackScore.classList.remove("active");
+    isWhiteTurn = false;
+    blackScore === null || blackScore === void 0 ? void 0 : blackScore.classList.add("active");
+    whiteScore === null || whiteScore === void 0 ? void 0 : whiteScore.classList.remove("active");
     // Recalculate legal moves for first turn
     noLegalMove = false;
-    let legalSquares = getLegalSquares("white");
+    let legalSquares = getLegalSquares("black");
     highlightLegalSquares(legalSquares);
 };
 (_a = document.getElementById("resetButton")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", resetGame);
+// implement CPU
+const cpuMove = () => {
+    let cpuColor = isWhiteTurn ? "white" : "black";
+    let legalMoves = getLegalSquares(cpuColor);
+    if (legalMoves.length === 0) {
+        switchTurn();
+        return;
+    }
+    // Select best move
+    let chosenMove = pickBestMove(legalMoves, cpuColor);
+    let targetSquare = document.getElementById(chosenMove);
+    // Simulate the move
+    if (targetSquare) {
+        targetSquare.click();
+    }
+};
+// find the move that flips the most pieces
+const pickBestMove = (legalMoves, pieceColor) => {
+    let bestMove = "";
+    let maxFlips = 0;
+    legalMoves.forEach((move) => {
+        let flipped = getFlippedPieces(move, pieceColor);
+        if (flipped.length > maxFlips) {
+            maxFlips = flipped.length;
+            bestMove = move;
+        }
+    });
+    return bestMove;
+};
+// Count how many pieces would flip
+const getFlippedPieces = (startingSquareId, pieceColor) => {
+    let flippedPieces = [];
+    // Define all 8 directions (rowOffset, colOffset)
+    const directions = [
+        [1, 0], // Down
+        [-1, 0], // Up
+        [0, 1], // Right
+        [0, -1], // Left
+        [1, 1], // Down-Right
+        [1, -1], // Down-Left
+        [-1, 1], // Up-Right
+        [-1, -1], // Up-Left
+    ];
+    directions.forEach(([rowOffset, colOffset]) => {
+        let tempFlipped = [];
+        let [row, col] = startingSquareId.split("").map(Number);
+        while (true) {
+            //it will keep running indefinitely unless there's a break statement inside the loop to exit.
+            row += rowOffset;
+            col += colOffset;
+            let currentSquareId = row.toString() + col.toString();
+            let currentSquare = document.getElementById(currentSquareId);
+            if (!currentSquare)
+                break; // Out of bounds
+            let squareContent = isSquareOccupied(currentSquare);
+            if (squareContent === "blank")
+                break; // Empty square, not valid
+            if (squareContent === pieceColor) {
+                flippedPieces.push(...tempFlipped); // Valid flip sequence
+                break;
+            }
+            tempFlipped.push(currentSquareId); // Store potential flips
+        }
+    });
+    return flippedPieces;
+};
 setupBoard();
