@@ -10,6 +10,7 @@ let whiteCount = 2;
 let blackCount = 2;
 let noLegalMove = false;
 const setupBoard = () => {
+    // assign an ID to each square
     for (let i = 0; i < squares.length; i++) {
         let row = 8 - Math.floor(i / 8);
         let col = (i % 8) + 1;
@@ -17,6 +18,7 @@ const setupBoard = () => {
         squares[i].setAttribute("id", id);
         squares[i].addEventListener("click", onSquareClick);
     }
+    // identify legal squares
     let legalSquares = getLegalSquares("white");
     highlightLegalSquares(legalSquares);
     whiteScore === null || whiteScore === void 0 ? void 0 : whiteScore.classList.add("active");
@@ -333,12 +335,11 @@ const checkAndFlip = (clickedSquareId, pieceColor) => {
     moveToFirstRowFirstColumn(clickedSquareId, pieceColor);
     // flip the target pieces
     reversePieces(pieceColor);
-    squaresToFlip.length = 0;
 };
 const reversePieces = (color) => {
     squaresToFlip.forEach((squareId) => {
         let square = document.getElementById(squareId);
-        // remove all pieces from the squares in squaresToFlip array
+        // remove the existing piece from the square
         while (square === null || square === void 0 ? void 0 : square.firstChild) {
             square.firstChild.remove();
         }

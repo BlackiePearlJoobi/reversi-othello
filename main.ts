@@ -9,6 +9,7 @@ let blackCount = 2;
 let noLegalMove = false;
 
 const setupBoard = (): void => {
+  // assign an ID to each square
   for (let i = 0; i < squares.length; i++) {
     let row = 8 - Math.floor(i / 8);
     let col = (i % 8) + 1;
@@ -16,6 +17,8 @@ const setupBoard = (): void => {
     squares[i].setAttribute("id", id);
     squares[i].addEventListener("click", onSquareClick);
   }
+
+  // identify legal squares
   let legalSquares: string[] = getLegalSquares("white");
   highlightLegalSquares(legalSquares);
   whiteScore?.classList.add("active");
@@ -419,14 +422,13 @@ const checkAndFlip = (clickedSquareId: string, pieceColor: Color): void => {
 
   // flip the target pieces
   reversePieces(pieceColor);
-  squaresToFlip.length = 0;
 };
 
 const reversePieces = (color: Color): void => {
   squaresToFlip.forEach((squareId) => {
     let square = document.getElementById(squareId);
 
-    // remove all pieces from the squares in squaresToFlip array
+    // remove the existing piece from the square
     while (square?.firstChild) {
       square.firstChild.remove();
     }
@@ -498,6 +500,7 @@ const showEndGameMessage = (message: string): void => {
   alert.style.display = "block";
   reversiBoad.style.opacity = "0.5";
   alert.innerHTML = message;
+
   setTimeout(() => {
     alert.style.display = "none";
     reversiBoad.style.opacity = "1";
